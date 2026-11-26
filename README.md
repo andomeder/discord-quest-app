@@ -38,6 +38,49 @@ Alternatively, you can follow the [development setup instructions](#-development
 > Webview2 is required to run the app. WebView2 comes preinstalled on Windows 11. On versions older than Windows 11 you may need to install it manually.
 > If you don't have it installed, you can download it from [here](https://developer.microsoft.com/en-us/microsoft-edge/webview2).
 
+### Linux (via Proton)
+
+The Windows build also runs on Linux through [Proton](https://github.com/ValveSoftware/Proton), so there is no separate Linux build to keep in sync. This path uses `umu-launcher` (shipped with [Heroic](https://heroicgameslauncher.com/)) plus a GE-Proton or Proton build that Steam is already managing.
+
+```bash
+git clone https://github.com/andomeder/discord-quest-app.git
+cd discord-quest-app
+./packaging/linux/install.sh
+```
+
+That installs:
+
+| What | Where |
+| --- | --- |
+| Proton prefix, WebView2 runtime and the app | `${XDG_DATA_HOME:-~/.local/share}/discord-quest-app/prefix` |
+| Launcher | `~/.local/bin/discord-quest-app` |
+| Menu entry | `${XDG_DATA_HOME:-~/.local/share}/applications/discord-quest-app.desktop` |
+
+Launch it with `discord-quest-app` or from the application menu.
+
+Requirements: `umu-run` (from `umu-launcher` or Heroic), a Proton or GE-Proton build, `curl`, and `mingw-w64` (used to build the dummy-game runner).
+
+Overrides:
+
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `PROTONPATH` | Proton or GE-Proton directory to use | newest GE-Proton, then newest Steam Proton |
+| `UMU_RUN` | path to `umu-run` | `umu-run` on `PATH`, then Heroic's copy |
+| `WEBVIEW2_ARGS` | WebView2 browser arguments | `--no-sandbox --disable-gpu --in-process-gpu` |
+| `GS_ARGS` | opt into gamescope, e.g. `GS_ARGS="-W 1920 -H 1080 -f"` | unset |
+| `DQA_PREFIX`, `DQA_CACHE` | prefix and download locations | the XDG paths above |
+
+Updates are applied by re-running `install.sh` with `DQA_REFRESH=1`. Do not accept the app's own update prompt under Linux: it would run a Windows installer inside Wine.
+
+> [!NOTE]
+> gamescope is not needed and is best avoided for this app. It upscales the app's own window to the monitor, which makes text soft, and it can hand the display to the dummy game's window, leaving the app hidden behind a black screen while the game runs. Leave `GS_ARGS` unset unless you deliberately want fullscreen game presentation.
+
+> [!NOTE]
+> The Windows dummy-game runner aborts under Wine when it cannot create a tray icon, so the Linux setup replaces it with a tray-free build that keeps its window hidden. Game detection reads the process name, which is what Discord uses, so a window is not required.
+
+> [!WARNING]
+> On Linux the app renders in software, so scrolling is not perfectly smooth. Detecting a game is verified; a quest actually completing on Linux is not.
+
 
 ## ✨ Features
 
@@ -55,7 +98,8 @@ The dummy game executale files used by this program are placed in a folder calle
 
 ## Supported Platforms
 
-- Windows 11 
+- Windows 11
+- Linux, using the Windows build under Proton (see [Linux (via Proton)](#linux-via-proton))
 
 
 ## Tech Stack

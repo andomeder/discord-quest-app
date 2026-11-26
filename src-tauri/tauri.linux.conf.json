@@ -1,6 +1,18 @@
 {
+  "app": {
+    "windows": [
+      {
+        "title": "Discord Quest App",
+        "width": 800,
+        "height": 600,
+        "backgroundColor": "#000000",
+        "decorations": false
+      }
+    ]
+  },
   "bundle": {
     "targets": ["deb", "appimage"],
+    "createUpdaterArtifacts": false,
     "resources": {
       "resources/src-linux": "data/src-linux"
     }

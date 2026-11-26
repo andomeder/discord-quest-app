@@ -70,7 +70,8 @@ Overrides:
 | `GS_ARGS` | opt into gamescope, e.g. `GS_ARGS="-W 1920 -H 1080 -f"` | unset |
 | `DQA_PREFIX`, `DQA_CACHE` | prefix and download locations | the XDG paths above |
 
-Updates are applied by re-running `install.sh` with `DQA_REFRESH=1`. Do not accept the app's own update prompt under Linux: it would run a Windows installer inside Wine.
+> [!WARNING]
+> Do not accept the app's own update prompt under Linux: it would run a Windows installer inside Wine. To update, re-run `install.sh` with `DQA_REFRESH=1`.
 
 > [!NOTE]
 > gamescope is not needed and is best avoided for this app. It upscales the app's own window to the monitor, which makes text soft, and it can hand the display to the dummy game's window, leaving the app hidden behind a black screen while the game runs. Leave `GS_ARGS` unset unless you deliberately want fullscreen game presentation.

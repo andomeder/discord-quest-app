@@ -92,10 +92,22 @@ async fn create_fake_game(
     println!("Creating dummy game executable: {:?}", resource_path);
     let target_executable_path = game_folder_path.join(executable_name);
     match std::fs::copy(&resource_path, &target_executable_path) {
-        Ok(_) => Ok(format!(
-            "Dummy executable copied to: {:?}",
-            target_executable_path
-        )),
+        Ok(_) => {
+            // Bundled resources lose their executable bit (deb, AppImage), and the
+            // copied runner has to be executable to be spawned.
+            #[cfg(not(target_os = "windows"))]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                let _ = std::fs::set_permissions(
+                    &target_executable_path,
+                    std::fs::Permissions::from_mode(0o755),
+                );
+            }
+            Ok(format!(
+                "Dummy executable copied to: {:?}",
+                target_executable_path
+            ))
+        }
         Err(e) => Err(format!("Failed to copy dummy executable: {}", e)),
     }
 }

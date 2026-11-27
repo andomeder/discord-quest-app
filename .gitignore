@@ -28,4 +28,4 @@ _target
 src-tauri/resources/*.exe
 src-tauri/resources/src-linux
 
-/.omo/
+/.omo/src-tauri/webkit2gtk/

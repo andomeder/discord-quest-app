@@ -40,14 +40,33 @@ Alternatively, you can follow the [development setup instructions](#-development
 
 ### Linux
 
-Install the dependencies for your distribution. On Debian and Ubuntu:
+#### Requirements
+
+Building from source needs Rust, Node with pnpm, a C toolchain, WebKitGTK 4.1 and SDL2. The [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) list the packages for each distribution.
+
+The AppImage needs none of this. It carries its own copy of WebKitGTK.
+
+#### Debian and Ubuntu
+
+Install the package from Releases. It adds the app, a desktop entry and an icon, so the app appears in your application menu.
 
 ```bash
-sudo apt install libwebkit2gtk-4.1-dev libsdl2-dev libxdo-dev libssl-dev \
-  libayatana-appindicator3-dev librsvg2-dev build-essential
+sudo apt install ./Discord-Quest-App_*.deb
 ```
 
-Build and install:
+#### Other distributions
+
+Download the AppImage from Releases and run the install script. It copies the AppImage to `~/.local/bin/discord-quest-app.AppImage` and writes `~/.local/share/applications/discord-quest-app.desktop`.
+
+```bash
+./packaging/linux/install-appimage.sh ~/Downloads/Discord-Quest-App_*.AppImage
+```
+
+Launch it from your application menu, or run `discord-quest-app.AppImage`.
+
+#### Build from source
+
+Install the requirements above, then:
 
 ```bash
 git clone https://github.com/m-yr-ondo/discord-quest-app.git
@@ -56,12 +75,11 @@ pnpm install
 pnpm run build:runner:linux
 pnpm run copy:runner:linux
 pnpm tauri build
-sudo apt install ./src-tauri/target/release/bundle/deb/*.deb
 ```
 
-Launch from the application menu, or run `discord-quest-app`.
+The bundles land in `src-tauri/target/release/bundle/`. Install the `.deb` with `apt install`, or install the AppImage with `packaging/linux/install-appimage.sh`.
 
-The window has no title bar under Wayland. Close it with your compositor's keybind.
+Under Wayland the window has no title bar. Close it with your compositor's keybind.
 
 
 ## ✨ Features

@@ -48,7 +48,7 @@ The AppImage needs none of this. It carries its own copy of WebKitGTK.
 
 #### Debian and Ubuntu
 
-Install the package from Releases. It adds the app, a desktop entry and an icon, so the app appears in your application menu.
+Install the package from [Releases](https://github.com/m-yr-ondo/discord-quest-app/releases/latest). It adds the app, a desktop entry and an icon, so the app appears in your application menu.
 
 ```bash
 sudo apt install ./Discord-Quest-App_*.deb
@@ -56,7 +56,7 @@ sudo apt install ./Discord-Quest-App_*.deb
 
 #### Other distributions
 
-Download the AppImage from Releases and run the install script. It copies the AppImage to `~/.local/bin/discord-quest-app.AppImage` and writes `~/.local/share/applications/discord-quest-app.desktop`.
+Download the AppImage from [Releases](https://github.com/m-yr-ondo/discord-quest-app/releases/latest) and run the install script. It copies the AppImage to `~/.local/bin/discord-quest-app.AppImage` and writes `~/.local/share/applications/discord-quest-app.desktop`.
 
 ```bash
 ./packaging/linux/install-appimage.sh ~/Downloads/Discord-Quest-App_*.AppImage

@@ -24,5 +24,8 @@ jobs:
       - name: Build src-linux runner
         run: cargo build --release --manifest-path src-linux/Cargo.toml
 
+      - name: Copy runner into resources
+        run: cp src-linux/target/release/src-linux src-tauri/resources/src-linux
+
       - name: Check Tauri backend (Linux)
         run: cargo check --manifest-path src-tauri/Cargo.toml
